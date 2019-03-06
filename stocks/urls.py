@@ -10,7 +10,7 @@ urlpatterns = [
     path("create_account", views.createAccount, name="create_account"),
     path('ideas', views.ideas, name='ideas'),
     path('trade', views.trade, name='trade'),
-    path('build_trade/<str:ticker>', views.build_trade, name='build_trade'),
+    path('build_trade/<str:ticker>/<str:name>', views.build_trade, name='build_trade'),
 
 
 ]

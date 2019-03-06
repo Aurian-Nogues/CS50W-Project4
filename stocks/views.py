@@ -101,17 +101,18 @@ def trade(request):
     if request.method == 'POST':
         #get stock name and build alphavantage API query
         stock = request.POST["stock-name"]
+        #protect from empty string input
+        if stock == "":
+            return render(request, "stocks/select_stock.html")
+
         api_query = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + stock + "&apikey=7ZON9TG94BAELGBM&datatype=json"
-        #get response and put it in Json format
+        #get response and put it in dict
         response = requests.get(api_query)
         data = dict(response.json())
+
+        #remove numbers from dictionnary so keys are accessible
         data = [cut_off_numbers_from_dict_keys(item) for item in data['bestMatches']]
-        pprint(data)
-        #length = len(data['bestMatches'])
-        #for i in range (0,length):
-        #    print(data['bestMatches'][i]['2. name'])
-        #pprint(data)
-        #print(data['bestMatches'][0]['2. name'])
+
         context = {
             "data": data,
         }
@@ -122,10 +123,26 @@ def trade(request):
     }
     return render(request, "stocks/select_stock.html", context)
 
-def build_trade(request, ticker):
+def build_trade(request, ticker, name):
+
+    #build alphavantage API query
+    api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
+    #get response and put it in dict
+    response = requests.get(api_query)
+    #pprint(response)
+    data = dict(response.json())
+    #remove numbers from dictionnary so entries are accessible
+
+    #remove numbers from dictionnary so keys are accessible
+    data = data['Global Quote']
+    data = cut_off_numbers_from_dict_keys(data)
+    pct = data['change percent']
 
     context = {
-        "ticker": ticker
+        "ticker": ticker,
+        "data": data,
+        "pct": pct,
+        "name": name
     }
 
     return render(request, "stocks/build_trade.html", context)

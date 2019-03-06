@@ -48,10 +48,10 @@
       <tbody>
           {% for item in data %}
             <tr>
-              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.symbol }}</a></td>
-              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.name }}</a></td>
-              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.type }}</a></td>
-              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.region }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol item.name %}">{{ item.symbol }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol item.name %}">{{ item.name }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol item.name %}">{{ item.type }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol item.name %}">{{ item.region }}</a></td>
             </tr>
         {% endfor %}
       </tbody>

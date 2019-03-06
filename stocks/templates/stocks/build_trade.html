@@ -4,12 +4,58 @@
     Trade
 {% endblock %}
 
+<!-- /////////////////////////////////////////////// -->
+
+{% block body1 %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Stock name</th>
+        <th scope="col">Ticker</th>
+        <th scope="col">Current price</th>
+        <th scope="col">% move today</th>
 
 
-{% block body %}
-    
-<h1>Trade</h1>
-<p>{{ticker}}</p>
-
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td>{{ name }}</td>
+            <td>{{ data.symbol }}</td>
+            <td>{{ data.price }}</td>
+            <td>{{ pct }}</td>
+          </tr>
+    </tbody>
+  </table>
 
 {% endblock %}
+
+<!-- /////////////////////////////////////////////// -->
+
+{% block body2 %}
+    
+
+{% endblock %}
+
+<!-- /////////////////////////////////////////////// -->
+
+{% block body3 %}
+    
+
+{% endblock %}
+
+<!-- /////////////////////////////////////////////// -->
+
+{% block body4 %}
+<h1>Trade</h1>
+<p>{{ticker}}</p>
+<p>{{data}}</p>
+<p>{{ data.open }}</p>
+
+{% endblock %}
+
+    
+
+
+
+
