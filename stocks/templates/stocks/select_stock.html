@@ -36,9 +36,27 @@
 
 {% if data|length > 0 %}
     
-    {% for item in data %}
-        <p>{{ item.symbol }} - {{ item.name }}</p>
-    {% endfor %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Symbol</th>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Region</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for item in data %}
+            <tr>
+              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.symbol }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.name }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.type }}</a></td>
+              <td><a href="{% url 'build_trade' item.symbol %}">{{ item.region }}</a></td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+        <!-- <p>{{ item.symbol }} - {{ item.name }}</p> -->  
 
 {% endif %}
 
@@ -49,24 +67,6 @@
 
 
 {% block body4 %}
-<table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Symbol</th>
-            <th scope="col">Name</th>
-            <th scope="col">Type</th>
-            <th scope="col">Region</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><a href="{% url 'build_trade' 'AAPL' %}">AAPL</a></td>
-            <td>Apple Inc.</td>
-            <td>Equity</td>
-            <td>United States</td>
-          </tr>
 
-        </tbody>
-      </table>
 
 {% endblock %}
