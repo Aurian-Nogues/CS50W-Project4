@@ -1,0 +1,72 @@
+{% extends "stocks/base.html" %}
+
+{% block title %}
+    Select stock
+{% endblock %}
+
+<!-- /////////////////////////////////////////////// -->
+
+{% block body1 %}
+</br>
+<form action="{% url 'trade' %}" method="post">
+        {% csrf_token %}
+    <div class="input-group mb-3">
+        <input id ="stock-name-input" name="stock-name" type="text" class="form-control" placeholder="Company name" aria-label="Stock" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <input type="submit" value="Search" />
+            </div>
+    </div>   
+</form>
+
+{% endblock %}
+
+
+<!-- /////////////////////////////////////////////// -->
+
+{% block body2 %}
+    
+
+{% endblock %}
+
+
+<!-- /////////////////////////////////////////////// -->
+
+
+{% block body3 %}
+
+{% if data|length > 0 %}
+    
+    {% for item in data %}
+        <p>{{ item }}</p>
+    {% endfor %}
+
+{% endif %}
+
+{% endblock %}
+
+
+<!-- /////////////////////////////////////////////// -->
+
+
+{% block body4 %}
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="{% url 'build_trade' 'AAPL' %}">AAPL</a></td>
+            <td>Apple Inc.</td>
+            <td>Equity</td>
+            <td>United States</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "stocks/base0.html" %}
+
+
+    {% block title %}
+        Create account
+    {% endblock %}
+
+    {% block body1 %}
+    <div id="registration">
+        <form class="site-form" action="{% url 'create_account' %}" method="post">
+        {% csrf_token %}
+        <h1> Create account</h1>
+            <table id="register-form">
+                {{form}}
+            </table>
+        <br/>
+        <input id="create-user-button" type='submit' value='Create account'>   
+        </form>
+    </div>
+        
+    {% endblock %}
+
+{% block body2 %}
+
+
+
+
+
+{% endblock %}
+
+
+
