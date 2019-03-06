@@ -37,7 +37,7 @@
 {% if data|length > 0 %}
     
     {% for item in data %}
-        <p>{{ item }}</p>
+        <p>{{ item.symbol }} - {{ item.name }}</p>
     {% endfor %}
 
 {% endif %}
