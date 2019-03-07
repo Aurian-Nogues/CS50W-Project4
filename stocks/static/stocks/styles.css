@@ -26,3 +26,8 @@
 #stock-name-input {
     max-width: 400px;
 }
+
+#investment-case-input{
+    line-height:80px;
+    width:100%;
+}

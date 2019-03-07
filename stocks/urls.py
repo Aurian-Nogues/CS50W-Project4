@@ -11,6 +11,5 @@ urlpatterns = [
     path('ideas', views.ideas, name='ideas'),
     path('trade', views.trade, name='trade'),
     path('build_trade/<str:ticker>/<str:name>', views.build_trade, name='build_trade'),
-
-
+    path('record_trade', views.record_trade, name='record_trade'),
 ]

@@ -20,9 +20,9 @@
     </thead>
     <tbody>
           <tr>
-            <td>{{ name }}</td>
-            <td>{{ data.symbol }}</td>
-            <td>{{ data.price }}</td>
+            <td id="name">{{ name }}</td>
+            <td id="ticker">{{ data.symbol }}</td>
+            <td id="price">{{ data.price }}</td>
             <td>{{ pct }}</td>
           </tr>
     </tbody>
@@ -40,7 +40,11 @@
 <!-- /////////////////////////////////////////////// -->
 
 {% block body3 %}
-    
+<h5>Investment case:</h5>
+      <textarea id ="investment-case-input" name="case" type="text" method="post"></textarea>
+    </br>
+      <input type="submit" value="Record idea" id="submit" />
+          
 
 {% endblock %}
 
@@ -52,6 +56,9 @@
 <p>{{data}}</p>
 <p>{{ data.open }}</p>
 
+<!--Load page specific JavaScript --> 
+{% load static %}
+<script src="{% static 'stocks/build_trade.js' %}"></script>
 {% endblock %}
 
     

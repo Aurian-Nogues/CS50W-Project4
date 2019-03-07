@@ -47,7 +47,6 @@ def dashboard(request):
     #if user is not conntected send to login page
     if not request.user.is_authenticated:
         return render(request, "stocks/login.html", {"message": None})
-
     context = {
     }
     return render(request, "stocks/dashboard.html", context)
@@ -118,13 +117,15 @@ def trade(request):
         }
         return render(request, "stocks/select_stock.html", context)
 
-
+    
     context = {
     }
     return render(request, "stocks/select_stock.html", context)
 
 def build_trade(request, ticker, name):
-
+    #if user is not conntected send to login page
+    if not request.user.is_authenticated:
+        return render(request, "stocks/login.html", {"message": None})
     #build alphavantage API query
     api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
     #get response and put it in dict
@@ -144,8 +145,41 @@ def build_trade(request, ticker, name):
         "pct": pct,
         "name": name
     }
-
     return render(request, "stocks/build_trade.html", context)
+
+def record_trade(request):
+    #if user is not conntected send to login page
+    if not request.user.is_authenticated:
+        return render(request, "stocks/login.html", {"message": None})
+
+    #if request is not a POST, send back to selecting a stock
+    if request.method == 'GET':
+        context = {
+
+        }
+        return render(request, "stocks/select_stock.html", context)
+
+    if request.is_ajax() and request.POST:
+    
+        print("POST")
+        user=request.user
+        name = request.POST.get('name')
+        ticker = request.POST.get('ticker')
+        price = request.POST.get('price')
+        message = request.POST.get('message')
+        print(user)
+        print(ticker)
+        print(message)
+
+
+        context = {
+        
+        }
+
+        return render(request, "stocks/dashboard.html", context)
+
+    else:
+        raise Http404
 
 
 
