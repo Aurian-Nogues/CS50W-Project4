@@ -189,6 +189,18 @@ def record_trade(request):
     else:
         raise Http404
 
+def close_trade(request, ticker, open_price, open_date):
+    if not request.user.is_authenticated:
+        return render(request, "stocks/login.html", {"message": None})
+    
+    user=request.user
 
+
+    #############################control for no matching trade
+    trade = Trade_idea.objects.all().get(user=user, status="open", ticker=ticker, open_price=open_price, open_date=open_date)
+    print(trade)
+    trade.status = "closed"
+    trade.save()
+    return HttpResponseRedirect(reverse("dashboard"))
 
 # api key 7ZON9TG94BAELGBM

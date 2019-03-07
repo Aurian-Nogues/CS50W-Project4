@@ -30,7 +30,7 @@
             <td>{{ trade.performance }}</td>
             <td>{{ trade.target_price }}</td>
             <td>{{ trade.upside }}</td>
-            <td>Button</td>
+            <td><a href="{% url 'close_trade' trade.ticker trade.open_price trade.open_date %}" class="btn btn-danger">Close trade</a></td>
           </tr>
           {% endfor %}
     </tbody>
