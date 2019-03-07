@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'stocks_tracker.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 
-Use the following live settings to build on Travis CI
+#Use the following live settings to build on Travis CI
 if os.getenv('TRAVIS', None):
     SECRET_KEY = "SecretKeyForUseOnTravis"
     DEBUG = False
