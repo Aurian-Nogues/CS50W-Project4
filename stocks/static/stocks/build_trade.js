@@ -47,16 +47,17 @@ function submit(){
     ticker = $('#ticker').text();
     price = $('#price').text();
     message = $('textarea#investment-case-input').val();
+    target = $('#target-price-input').val();
     
     //make ajax post request
-    $.ajax({
+     $.ajax({
         type: "POST",
         url: "/record_trade",
         dataType: "json",
-        data: {"name": name, "ticker": ticker, "price":price, "message":message},
+        data: {"name": name, "ticker": ticker, "price":price, "message":message, "target":target},
 
     });
     window.location.pathname = 'dashboard';
-}
+} 
 
 

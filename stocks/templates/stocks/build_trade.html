@@ -41,8 +41,11 @@
 
 {% block body3 %}
 <h5>Investment case:</h5>
-      <textarea id ="investment-case-input" name="case" type="text" method="post"></textarea>
+      <textarea id ="investment-case-input" type="text"></textarea>
+<h5>target price:</h5>
+      <input id ="target-price-input" type="number"></textarea>
     </br>
+  </br>
       <input type="submit" value="Record idea" id="submit" />
           
 
@@ -51,10 +54,7 @@
 <!-- /////////////////////////////////////////////// -->
 
 {% block body4 %}
-<h1>Trade</h1>
-<p>{{ticker}}</p>
-<p>{{data}}</p>
-<p>{{ data.open }}</p>
+
 
 <!--Load page specific JavaScript --> 
 {% load static %}

@@ -11,7 +11,7 @@ from .models import Trade_idea
 def index(request):
     #if user is not conntected send to login page
     if not request.user.is_authenticated:
-        return render(request, "stocks/login.html", {"message": None})
+        return render(request, "stocks/login.html", {"message": None})  
 
     return HttpResponseRedirect(reverse("dashboard"))
 
@@ -46,12 +46,24 @@ def dashboard(request):
     #if user is not conntected send to login page
     if not request.user.is_authenticated:
         return render(request, "stocks/login.html", {"message": None})
+
+    user=request.user
+    trades = Trade_idea.objects.all().filter(user=user)
+    for trade in trades:
+        ticker = trade.ticker
+        api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
+        response = requests.get(api_query)
+        data = dict(response.json())
+        #remove numbers from dictionnary so keys are accessible
+        data = data['Global Quote']
+        data = cut_off_numbers_from_dict_keys(data)
+        print(data)
+
+
+    
     context = {
     }
     return render(request, "stocks/dashboard.html", context)
-
-
-
 
 def ideas(request):
     #if user is not conntected send to login page
@@ -69,27 +81,6 @@ def cut_off_numbers_from_dict_keys(dictionary):
         result[new_key] = val
     return result
 
-assert cut_off_numbers_from_dict_keys({
-    "1. symbol": "AAPL",
-    "2. name": "Apple Inc.",
-    "3. type": "Equity",
-    "4. region": "United States",
-    "5. marketOpen": "09:30",
-    "6. marketClose": "16:00",
-    "7. timezone": "UTC-05",
-    "8. currency": "USD",
-    "9. matchScore": "0.8889"
-}) == {
-    "symbol": "AAPL",
-    "name": "Apple Inc.",
-    "type": "Equity",
-    "region": "United States",
-    "marketOpen": "09:30",
-    "marketClose": "16:00",
-    "timezone": "UTC-05",
-    "currency": "USD",
-    "matchScore": "0.8889"
-}
 
 def trade(request):
     #if user is not conntected send to login page
@@ -129,9 +120,7 @@ def build_trade(request, ticker, name):
     api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
     #get response and put it in dict
     response = requests.get(api_query)
-    #pprint(response)
     data = dict(response.json())
-    #remove numbers from dictionnary so entries are accessible
 
     #remove numbers from dictionnary so keys are accessible
     data = data['Global Quote']
@@ -160,24 +149,20 @@ def record_trade(request):
 
     if request.is_ajax() and request.POST:
     
-        print("POST")
         user=request.user
         name = request.POST.get('name')
         ticker = request.POST.get('ticker')
         price = request.POST.get('price')
         message = request.POST.get('message')
         date = datetime.date.today()
+        target = request.POST.get('target')
         status="open"
-        entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price, message=message, open_date=date, status=status)
+        entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price, message=message, open_date=date, status=status, target_price=target)
         entry.save()
-
-
-
 
         context = {
         
         }
-
         return render(request, "stocks/dashboard.html", context)
 
     else:
