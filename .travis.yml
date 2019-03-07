@@ -1,25 +1,28 @@
-    language: python
+language: python
 
-    python:
+python:
+  - "3.4"
 
-      - "3.6"
+services: mysql
 
-    services:
+env:
+  global:
+    - DJANGO_SETTINGS_MODULE="stocks_tracker.settings"
+    - PYTHONPATH="/home/travis/build/Aurian-Nogues/CS50W-Project4"
+    - PIP_USE_MIRRORS=true
+    - BUILD_ON_TRAVIS=true
+  matrix:
+    - DJANGO=1.7 DB=mysql
 
-      - postgresql
+#commands to install dependencies
+install:
+  - pip install -q Django==$DJANGO
+  - pip install -q -r requirements.txt
 
-    env:
+before_script:
+  - mysql -e 'create database travis_ci_db;'
+  - python manage.py syncdb --noinput
 
-      -DJANGO=1.8 DB=postgresql
-    install:
-
-      - pip install -r requirements.txt
-
-    before_script: 
-
-      - psql -c 'create database travis_ci_test;' -U postgres
-      - python3 manage.py makemigrations
-      - python3 manage.py migrate
-    script: # => 7
-
-      - python3 manage.py test
+#command to run the test suite
+script:
+  - python manage.py test
