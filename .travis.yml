@@ -12,7 +12,6 @@ env:
 #commands to install dependencies
 install:
 - pip install -r requirements.txt
-- pip install mysql-python
 
 before_script:
 - mysql -e 'create database IF NOT EXISTS myapp_db;' -uroot
