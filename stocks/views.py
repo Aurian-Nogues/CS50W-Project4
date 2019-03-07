@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
-import requests
-import json
+import requests, json, datetime
 from pprint import pprint
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-
 from django.urls import reverse
+from .models import Trade_idea
 
 def index(request):
     #if user is not conntected send to login page
@@ -167,9 +166,13 @@ def record_trade(request):
         ticker = request.POST.get('ticker')
         price = request.POST.get('price')
         message = request.POST.get('message')
-        print(user)
-        print(ticker)
-        print(message)
+        date = datetime.date.today()
+        status="open"
+        entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price, message=message, open_date=date, status=status)
+        print(entry)
+        entry.save()
+
+
 
 
         context = {
