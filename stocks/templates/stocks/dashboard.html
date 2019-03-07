@@ -11,26 +11,28 @@
     <thead>
       <tr>
         <th scope="col">Name</th>
-        <th scope="col">Open date</th>
         <th scope="col">Open price</th>
         <th scope="col">Price today</th>
         <th scope="col">Performance</th>
-        <th scope="col">Comment</th>
+        <th scope="col">Target price</th>
+        <th scope="col">Upside</th>
         <th scope="col">Close trade</th>
 
 
       </tr>
     </thead>
     <tbody>
+        {% for trade in trades %}
           <tr>
-            <td id="name">here</td>
-            <td id="ticker">here</td>
-            <td id="price">here</td>
-            <td>here</td>
-            <td>here</td>
-            <td>here</td>
-            <td>here</td>
+            <td>{{ trade.name }}</td>
+            <td>{{ trade.open_price }}</td>
+            <td>{{ trade.current_price }}</td>
+            <td>{{ trade.performance }}</td>
+            <td>{{ trade.target_price }}</td>
+            <td>{{ trade.upside }}</td>
+            <td>Button</td>
           </tr>
+          {% endfor %}
     </tbody>
   </table>    
 

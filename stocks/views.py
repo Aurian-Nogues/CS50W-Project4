@@ -47,21 +47,42 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return render(request, "stocks/login.html", {"message": None})
 
+    #get current user and find his open trades
     user=request.user
-    trades = Trade_idea.objects.all().filter(user=user)
+    trades = Trade_idea.objects.all().filter(user=user, status="open")
+        
+    #for each open trade 
     for trade in trades:
+
+        #get the ticker and make a query to the api
         ticker = trade.ticker
         api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
         response = requests.get(api_query)
         data = dict(response.json())
+
         #remove numbers from dictionnary so keys are accessible
         data = data['Global Quote']
         data = cut_off_numbers_from_dict_keys(data)
-        print(data)
 
+        #get necessary data and calculate upside and performance. Convert them to a string with % to print nicely in html table
+        current_price = float(data['price'])
+        open_price = float(trade.open_price)
+        target_price = float(trade.target_price)
+        upside = (current_price / target_price -1 ) * 100
+        upside = str(round(upside, 2)) + '%'
+        performance = (current_price / open_price -1 ) * 100
+        performance = str(round(performance, 2)) + '%'
 
-    
+        #write it in database
+        trade.current_price = current_price
+        trade.performance = performance
+        trade.upside = upside
+        trade.save()
+
+    trades = Trade_idea.objects.all().filter(user=user, status="open")
+
     context = {
+        "trades": trades,
     }
     return render(request, "stocks/dashboard.html", context)
 
