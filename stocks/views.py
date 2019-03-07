@@ -169,7 +169,6 @@ def record_trade(request):
         date = datetime.date.today()
         status="open"
         entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price, message=message, open_date=date, status=status)
-        print(entry)
         entry.save()
 
 
