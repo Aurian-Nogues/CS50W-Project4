@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'stocks_tracker.wsgi.application'
 
 
 Use the following live settings to build on Travis CI
-if os.getenv('BUILD_ON_TRAVIS', None):
+if os.getenv('TRAVIS', None):
     SECRET_KEY = "SecretKeyForUseOnTravis"
     DEBUG = False
     TEMPLATE_DEBUG = True
