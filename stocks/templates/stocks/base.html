@@ -21,7 +21,11 @@
                   <div class="navbar-nav">
                     <a class="nav-item nav-link" href="{% url 'index' %}">Dashboard</a>
                     <a class="nav-item nav-link" href="{% url 'trade' %}">Trade</a>
-                    <a class="nav-item nav-link" href="{% url 'ideas' %}">All ideas</a>
+                    <a class="nav-item nav-link" href="{% url 'track_record' %}">Track record</a>
+                    {% if request.user.is_staff %}
+                    <a class="nav-item nav-link" href="{% url 'team_dashboard' %}">Team dashboard</a>
+                    <a class="nav-item nav-link" href="{% url 'team_track_record' %}">Team track</a>
+                    {% endif %}
 
 
                     <a class="nav-item nav-link disabled" href="{% url 'logout' %}">Logout</a>
