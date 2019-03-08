@@ -11,9 +11,15 @@ The app was developped inside docker containers and uses Travis CI to run tests 
 It uses a free Alphavantage API key so it is only for demo purpose due to the limited number of requests allowed by the API. For a normal use the free account would need to be upgraded to premium
 
 To run the app run: docker-compose up and go to the indicated address
+
+To access the Django terminal:
+    Get web container id -> docker ps
+    Get inside the container: docker exec -t -i <id> bash
+    You can now execute normal commands like Python manage.py migrate
+
 It comes with an already created Superuser:
     Login: Admin
-    Pwd: Peanut1234
+    Pwd: SuperSecret
 
 Contents:
 
