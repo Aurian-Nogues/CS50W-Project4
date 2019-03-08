@@ -16,8 +16,8 @@ class Trade_idea(models.Model):
     close_date = models.CharField(max_length=10, blank=True, null=True)
     status = models.CharField(max_length=10)
 
-    def __str__(self):
-        return f"{self.user} / {self.ticker} / {self.status}"
+    #def __str__(self):
+     #   return f"{self.user} / {self.ticker} / {self.status}"
 
 
 
