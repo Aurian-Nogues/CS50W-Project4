@@ -131,7 +131,6 @@ def team_dashboard(request):
         trades = Trade_idea.objects.all().filter(status="open")
 
         context = {"trades":trades
-
         }   
         return render(request, "stocks/team_dashboard.html", context)
 
@@ -239,8 +238,9 @@ def record_trade(request):
         message = request.POST.get('message')
         date = datetime.date.today()
         target = request.POST.get('target')
+        current_price = request.POST.get('current_price')
         status="open"
-        entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price, message=message, open_date=date, status=status, target_price=target)
+        entry = Trade_idea(user=user, ticker=ticker, name=name, open_price=price,current_price =current_price, message=message, open_date=date, status=status, target_price=target)
         entry.save()
 
         context = {

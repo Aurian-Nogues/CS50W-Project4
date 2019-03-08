@@ -54,7 +54,7 @@ function submit(){
         type: "POST",
         url: "/record_trade",
         dataType: "json",
-        data: {"name": name, "ticker": ticker, "price":price, "message":message, "target":target},
+        data: {"name": name, "ticker": ticker, "price":price, "current_price":price, "message":message, "target":target},
 
     });
     window.location.pathname = 'dashboard';
