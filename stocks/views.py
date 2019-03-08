@@ -45,7 +45,6 @@ def logout_view(request):
     logout(request)
     return render(request, "stocks/login.html", {"message": "Logged out."})
 
-
 def dashboard(request):
     #if user is not conntected send to login page
     if not request.user.is_authenticated:
@@ -134,8 +133,6 @@ def team_dashboard(request):
         return render(request, "stocks/team_dashboard.html", context)
 
     return HttpResponseRedirect(reverse("dashboard"))
-
-
 
 def team_track_record(request):
     if not request.user.is_authenticated:

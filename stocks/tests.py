@@ -1,6 +1,6 @@
 from django.test import TestCase
 from .models import Trade_idea
-import requests, json
+import requests, json, datetime
 from .views import cut_off_numbers_from_dict_keys
 
 
@@ -9,9 +9,9 @@ class StocksTestCase(TestCase):
 
     def setUp(self):
         # Create new trade ideas
-            entry = Trade_idea(user="Warren", ticker="AAPL", name="Apple", open_price=175, message="Undervalued", open_date="2019-03-07", status="open")
+            entry = Trade_idea(user="Warren", ticker="AAPL", name="Apple", open_price=175, message="Undervalued", open_date="2019-03-07", status="open", target_price=180)
             entry.save()
-            entry = Trade_idea(user="George", ticker="GOOG", name="Alphabet", open_price=1150.53, message="I like it", open_date="2018-03-07", status="open")
+            entry = Trade_idea(user="George", ticker="GOOG", name="Alphabet", open_price=1150.53, message="I like it", open_date="2018-03-07", status="open", target_price=1200)
             entry.save()
         
     
@@ -31,6 +31,26 @@ class StocksTestCase(TestCase):
         expected = {'Global Quote': {'01. symbol': 'AAPL', '02. open': '173.8700', '03. high': '174.4400', '04. low': '172.0347', '05. price': '172.4300', '06. volume': '6506040', '07. latest trading day': '2019-03-07', '08. previous close': '174.5200', '09. change': '-2.0900', '10. change percent': '-1.1976%'}}
         
         assert len(data) == len(expected)
+
+    def test_close_trade(self):
+        #test if trade can be closed successfully then be identified as a closed trade
+        user="Warren"
+        ticker="AAPL"
+        open_price = 175
+        open_date = "2019-03-07"
+        trade = Trade_idea.objects.all().get(user=user, status="open", ticker=ticker, open_price=open_price, open_date=open_date)
+        
+        close_date = datetime.date.today()
+        trade.status = "closed"
+        trade.close_price = 180
+        trade.close_date = close_date
+        trade.performance = "15%"
+        trade.save()
+
+        result = Trade_idea.objects.all().filter(status="closed")
+
+        assert len(result) == 1
+
 
     def test_cutoff_function(self):
         #test if function to cut numbers from alphavantage response returns expected dict format
