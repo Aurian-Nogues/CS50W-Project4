@@ -8,6 +8,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from .models import Trade_idea
 
+#Set api key here, for production would need to change it to environment variable
+key = "7ZON9TG94BAELGBM"
+
 
 def index(request):
     #if user is not conntected send to login page
@@ -59,7 +62,7 @@ def dashboard(request):
 
         #get the ticker and make a query to the api
         ticker = trade.ticker
-        api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
+        api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=" + key
         response = requests.get(api_query)
         data = dict(response.json())
 
@@ -101,7 +104,7 @@ def team_dashboard(request):
 
             #get the ticker and make a query to the api
             ticker = trade.ticker
-            api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
+            api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=" + key
             response = requests.get(api_query)
             data = dict(response.json())
             
@@ -174,7 +177,7 @@ def trade(request):
         if stock == "":
             return render(request, "stocks/select_stock.html")
 
-        api_query = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + stock + "&apikey=7ZON9TG94BAELGBM&datatype=json"
+        api_query = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + stock + "&apikey="+ key +"&datatype=json"
         #get response and put it in dict
         response = requests.get(api_query)
         data = dict(response.json())
@@ -197,7 +200,7 @@ def build_trade(request, ticker, name):
     if not request.user.is_authenticated:
         return render(request, "stocks/login.html", {"message": None})
     #build alphavantage API query
-    api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=7ZON9TG94BAELGBM"
+    api_query = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + ticker + "&apikey=" + key
     #get response and put it in dict
     response = requests.get(api_query)
     data = dict(response.json())
