@@ -2,6 +2,8 @@
 
 Web Programming with Python and JavaScript
 
+Youtube video: https://youtu.be/Xo5B9eB810o
+
 This web app allows user to implement and monitor trade ideas.
 The app is built in a Django framework using Python, HTML, CSS, SQL and Javascript.
 The app was developped inside docker containers and uses Travis CI to run tests when new commits are being made.
