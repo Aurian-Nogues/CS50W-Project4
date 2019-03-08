@@ -86,7 +86,7 @@ if os.getenv('TRAVIS', None):
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'travis_ci_db',
             'USER': 'travis',
             'HOST': '127.0.0.1',
